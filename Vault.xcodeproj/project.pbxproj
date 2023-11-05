@@ -30,7 +30,7 @@
 		D32B3FFC2AF4236A00C008CC /* AlbumsVCExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32B3FFB2AF4236A00C008CC /* AlbumsVCExtension.swift */; };
 		D32B40032AF43BBB00C008CC /* AlbumModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32B40022AF43BBB00C008CC /* AlbumModel.swift */; };
 		D32B40052AF43C2A00C008CC /* PhotoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32B40042AF43C2A00C008CC /* PhotoModel.swift */; };
-		D32B40072AF43EA300C008CC /* NoAlbumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32B40062AF43EA300C008CC /* NoAlbumView.swift */; };
+		D32B40072AF43EA300C008CC /* NoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32B40062AF43EA300C008CC /* NoView.swift */; };
 		D32B40092AF444B000C008CC /* AlbumCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32B40082AF444B000C008CC /* AlbumCollectionView.swift */; };
 		D32B400B2AF444D600C008CC /* AlbumCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32B400A2AF444D600C008CC /* AlbumCell.swift */; };
 		D32B400E2AF44A6800C008CC /* AlbumPhotosVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32B400D2AF44A6800C008CC /* AlbumPhotosVC.swift */; };
@@ -38,6 +38,16 @@
 		D32B40162AF44F6E00C008CC /* PhotosCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32B40152AF44F6E00C008CC /* PhotosCell.swift */; };
 		D32B40182AF44FA400C008CC /* PhotoCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32B40172AF44FA400C008CC /* PhotoCollectionView.swift */; };
 		D32B401C2AF4569D00C008CC /* CoreDataManagerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32B401B2AF4569D00C008CC /* CoreDataManagerExtension.swift */; };
+		D32B40342AF57BBB00C008CC /* NotesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32B40332AF57BBB00C008CC /* NotesVC.swift */; };
+		D32B40852AF6B15500C008CC /* NotesTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32B40842AF6B15500C008CC /* NotesTableView.swift */; };
+		D32B40872AF6B17A00C008CC /* NotesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32B40862AF6B17A00C008CC /* NotesCell.swift */; };
+		D32B40892AF6B19200C008CC /* NoteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32B40882AF6B19200C008CC /* NoteModel.swift */; };
+		D32B408B2AF6BAFF00C008CC /* NotesVCExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32B408A2AF6BAFF00C008CC /* NotesVCExtension.swift */; };
+		D32B408D2AF6C86000C008CC /* PasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32B408C2AF6C86000C008CC /* PasswordVC.swift */; };
+		D32B40902AF6C8B700C008CC /* PasswordVCExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32B408F2AF6C8B700C008CC /* PasswordVCExtension.swift */; };
+		D32B40922AF6C98900C008CC /* PasswordModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32B40912AF6C98900C008CC /* PasswordModel.swift */; };
+		D32B40942AF6DFB900C008CC /* PasswordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32B40932AF6DFB900C008CC /* PasswordCell.swift */; };
+		D32B40962AF6E21600C008CC /* PasswordTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32B40952AF6E21600C008CC /* PasswordTableView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -65,7 +75,7 @@
 		D32B3FFB2AF4236A00C008CC /* AlbumsVCExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumsVCExtension.swift; sourceTree = "<group>"; };
 		D32B40022AF43BBB00C008CC /* AlbumModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumModel.swift; sourceTree = "<group>"; };
 		D32B40042AF43C2A00C008CC /* PhotoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoModel.swift; sourceTree = "<group>"; };
-		D32B40062AF43EA300C008CC /* NoAlbumView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoAlbumView.swift; sourceTree = "<group>"; };
+		D32B40062AF43EA300C008CC /* NoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoView.swift; sourceTree = "<group>"; };
 		D32B40082AF444B000C008CC /* AlbumCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumCollectionView.swift; sourceTree = "<group>"; };
 		D32B400A2AF444D600C008CC /* AlbumCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumCell.swift; sourceTree = "<group>"; };
 		D32B400D2AF44A6800C008CC /* AlbumPhotosVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumPhotosVC.swift; sourceTree = "<group>"; };
@@ -73,6 +83,16 @@
 		D32B40152AF44F6E00C008CC /* PhotosCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosCell.swift; sourceTree = "<group>"; };
 		D32B40172AF44FA400C008CC /* PhotoCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionView.swift; sourceTree = "<group>"; };
 		D32B401B2AF4569D00C008CC /* CoreDataManagerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManagerExtension.swift; sourceTree = "<group>"; };
+		D32B40332AF57BBB00C008CC /* NotesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesVC.swift; sourceTree = "<group>"; };
+		D32B40842AF6B15500C008CC /* NotesTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesTableView.swift; sourceTree = "<group>"; };
+		D32B40862AF6B17A00C008CC /* NotesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesCell.swift; sourceTree = "<group>"; };
+		D32B40882AF6B19200C008CC /* NoteModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteModel.swift; sourceTree = "<group>"; };
+		D32B408A2AF6BAFF00C008CC /* NotesVCExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesVCExtension.swift; sourceTree = "<group>"; };
+		D32B408C2AF6C86000C008CC /* PasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordVC.swift; sourceTree = "<group>"; };
+		D32B408F2AF6C8B700C008CC /* PasswordVCExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordVCExtension.swift; sourceTree = "<group>"; };
+		D32B40912AF6C98900C008CC /* PasswordModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordModel.swift; sourceTree = "<group>"; };
+		D32B40932AF6DFB900C008CC /* PasswordCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordCell.swift; sourceTree = "<group>"; };
+		D32B40952AF6E21600C008CC /* PasswordTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordTableView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,6 +152,8 @@
 		D32B3FD62AF3E8C100C008CC /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				D32B408E2AF6C8A500C008CC /* Password */,
+				D32B40322AF57BA600C008CC /* Notes */,
 				D32B400C2AF44A4E00C008CC /* AlbumPhotos */,
 				D32B3FE02AF3E91F00C008CC /* Albums */,
 				D32B3FDF2AF3E91600C008CC /* Settings */,
@@ -157,6 +179,8 @@
 			children = (
 				D32B40022AF43BBB00C008CC /* AlbumModel.swift */,
 				D32B40042AF43C2A00C008CC /* PhotoModel.swift */,
+				D32B40882AF6B19200C008CC /* NoteModel.swift */,
+				D32B40912AF6C98900C008CC /* PasswordModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -166,6 +190,8 @@
 			children = (
 				D32B400A2AF444D600C008CC /* AlbumCell.swift */,
 				D32B40152AF44F6E00C008CC /* PhotosCell.swift */,
+				D32B40862AF6B17A00C008CC /* NotesCell.swift */,
+				D32B40932AF6DFB900C008CC /* PasswordCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -176,9 +202,11 @@
 				D32B3FE52AF3E9A800C008CC /* CustomOnboardingView.swift */,
 				D32B3FEF2AF3EA5900C008CC /* CustomPaywallButton.swift */,
 				D32B3FF52AF3EAC500C008CC /* CustomButton.swift */,
-				D32B40062AF43EA300C008CC /* NoAlbumView.swift */,
+				D32B40062AF43EA300C008CC /* NoView.swift */,
 				D32B40082AF444B000C008CC /* AlbumCollectionView.swift */,
 				D32B40172AF44FA400C008CC /* PhotoCollectionView.swift */,
+				D32B40842AF6B15500C008CC /* NotesTableView.swift */,
+				D32B40952AF6E21600C008CC /* PasswordTableView.swift */,
 			);
 			path = CustomViews;
 			sourceTree = "<group>";
@@ -243,6 +271,24 @@
 				D32B400F2AF44AB700C008CC /* AlbumPhotosExtension.swift */,
 			);
 			path = AlbumPhotos;
+			sourceTree = "<group>";
+		};
+		D32B40322AF57BA600C008CC /* Notes */ = {
+			isa = PBXGroup;
+			children = (
+				D32B40332AF57BBB00C008CC /* NotesVC.swift */,
+				D32B408A2AF6BAFF00C008CC /* NotesVCExtension.swift */,
+			);
+			path = Notes;
+			sourceTree = "<group>";
+		};
+		D32B408E2AF6C8A500C008CC /* Password */ = {
+			isa = PBXGroup;
+			children = (
+				D32B408C2AF6C86000C008CC /* PasswordVC.swift */,
+				D32B408F2AF6C8B700C008CC /* PasswordVCExtension.swift */,
+			);
+			path = Password;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -322,30 +368,40 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D32B40942AF6DFB900C008CC /* PasswordCell.swift in Sources */,
+				D32B40852AF6B15500C008CC /* NotesTableView.swift in Sources */,
 				D32B3FC02AF3E81F00C008CC /* ViewController.swift in Sources */,
 				D32B3FE22AF3E94000C008CC /* OnboardingVC.swift in Sources */,
+				D32B40902AF6C8B700C008CC /* PasswordVCExtension.swift in Sources */,
 				D32B3FE62AF3E9A800C008CC /* CustomOnboardingView.swift in Sources */,
 				D32B40162AF44F6E00C008CC /* PhotosCell.swift in Sources */,
 				D32B401C2AF4569D00C008CC /* CoreDataManagerExtension.swift in Sources */,
+				D32B40892AF6B19200C008CC /* NoteModel.swift in Sources */,
 				D32B3FEC2AF3EA1800C008CC /* PaywallExtension.swift in Sources */,
 				D32B400E2AF44A6800C008CC /* AlbumPhotosVC.swift in Sources */,
+				D32B40922AF6C98900C008CC /* PasswordModel.swift in Sources */,
 				D32B3FF62AF3EAC500C008CC /* CustomButton.swift in Sources */,
 				D32B40052AF43C2A00C008CC /* PhotoModel.swift in Sources */,
 				D32B3FF02AF3EA5900C008CC /* CustomPaywallButton.swift in Sources */,
+				D32B40962AF6E21600C008CC /* PasswordTableView.swift in Sources */,
 				D32B3FFA2AF4232800C008CC /* AlbumsVC.swift in Sources */,
 				D32B3FBC2AF3E81F00C008CC /* AppDelegate.swift in Sources */,
 				D32B40182AF44FA400C008CC /* PhotoCollectionView.swift in Sources */,
 				D32B400B2AF444D600C008CC /* AlbumCell.swift in Sources */,
-				D32B40072AF43EA300C008CC /* NoAlbumView.swift in Sources */,
+				D32B408B2AF6BAFF00C008CC /* NotesVCExtension.swift in Sources */,
+				D32B40872AF6B17A00C008CC /* NotesCell.swift in Sources */,
+				D32B40072AF43EA300C008CC /* NoView.swift in Sources */,
 				D32B3FFC2AF4236A00C008CC /* AlbumsVCExtension.swift in Sources */,
 				D32B3FE82AF3E9BB00C008CC /* OnboardDeclarations.swift in Sources */,
 				D32B40092AF444B000C008CC /* AlbumCollectionView.swift in Sources */,
 				D32B3FEA2AF3E9F000C008CC /* PaywallVC.swift in Sources */,
 				D32B40102AF44AB700C008CC /* AlbumPhotosExtension.swift in Sources */,
 				D32B3FEE2AF3EA2C00C008CC /* PaywallDeclarations.swift in Sources */,
+				D32B408D2AF6C86000C008CC /* PasswordVC.swift in Sources */,
 				D32B3FF22AF3EA8500C008CC /* HomeVC.swift in Sources */,
 				D32B40032AF43BBB00C008CC /* AlbumModel.swift in Sources */,
 				D32B3FE42AF3E97400C008CC /* OnboardingVCExtension.swift in Sources */,
+				D32B40342AF57BBB00C008CC /* NotesVC.swift in Sources */,
 				D32B3FC62AF3E81F00C008CC /* Vault.xcdatamodeld in Sources */,
 				D32B3FF42AF3EAA300C008CC /* HomeDeclarations.swift in Sources */,
 				D32B3FF82AF3EAFE00C008CC /* SettingsVC.swift in Sources */,

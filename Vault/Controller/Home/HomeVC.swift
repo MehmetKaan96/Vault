@@ -156,6 +156,18 @@ class HomeVC: UIViewController {
             vc.modalPresentationStyle = .fullScreen
             self.present(destinationVC: vc, slideDirection: .right)
         }
+        
+        notesButton.addAction {
+            let vc = NotesVC()
+            vc.modalPresentationStyle = .fullScreen
+            self.present(destinationVC: vc, slideDirection: .right)
+        }
+        
+        passwordButton.addAction {
+            let vc = PasswordVC()
+            vc.modalPresentationStyle = .fullScreen
+            self.present(destinationVC: vc, slideDirection: .right)
+        }
     }
 }
 

@@ -1,23 +1,30 @@
 //
-//  AlbumsVC.swift
+//  NotesViewController.swift
 //  Vault
 //
-//  Created by Mehmet Kaan on 2.11.2023.
+//  Created by Mehmet Kaan on 3.11.2023.
 //
 
 import UIKit
 import NeonSDK
-import CoreData
 
-class AlbumsVC: UIViewController {
-    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-    var collectionView: AlbumCollectionView!
-    var selectedAlbum: AlbumModel!
+class NotesVC: UIViewController {
     
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    var notesTableView: NotesTableView!
+    var searchBar: UITextField!
     
     internal let textField: UITextField = {
         let tf = UITextField()
-        tf.placeholder = "Album Name"
+        tf.placeholder = "Text Here"
+        tf.font = Font.custom(size: 16, fontWeight: .Regular)
+        tf.borderStyle = .roundedRect
+        return tf
+    }()
+    
+    internal let descriptiontextField: UITextField = {
+        let tf = UITextField()
+        tf.placeholder = "Text Here"
         tf.font = Font.custom(size: 16, fontWeight: .Regular)
         tf.borderStyle = .roundedRect
         return tf
@@ -57,7 +64,7 @@ class AlbumsVC: UIViewController {
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "Albums"
+        label.text = "Notes"
         label.numberOfLines = 0
         label.textAlignment = .center
         label.textColor = .white
@@ -81,7 +88,7 @@ class AlbumsVC: UIViewController {
     }
     
     private func createUI() {
-        AlbumsVC.fetchFromCoreData()
+        fetchFromCoreData()
         view.backgroundColor = .headercolor
         view.addSubview(content)
         view.addSubview(backButton)
@@ -91,7 +98,11 @@ class AlbumsVC: UIViewController {
         content.addSubview(saveButton)
         content.addSubview(cancelButton)
         content.addSubview(textField)
+        content.addSubview(descriptiontextField)
         
+        textField.textAlignment = .left
+        textField.contentVerticalAlignment = .top
+    
         content.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(79)
             make.left.right.bottom.equalToSuperview()
@@ -114,52 +125,65 @@ class AlbumsVC: UIViewController {
             make.centerY.equalTo(titleLabel.snp.centerY)
         }
         
-        if albumArray.isEmpty {
-            customView = NoView(text: "There is No Albums", description: "You don't have any albums yet", image: "img_folder")
+        if noteArray.isEmpty {
+            customView = NoView(text: "There is No Notes", description: "You don't have any notes yet.", image: "img_notes")
             content.addSubview(customView)
             customView.snp.makeConstraints { make in
                 make.centerX.equalTo(content.snp.centerX)
                 make.top.equalTo(content.snp.top).offset(100)
             }
         } else {
-            print(albumArray)
-            collectionView = AlbumCollectionView()
-            collectionView.layer.cornerRadius = 10
-            collectionView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-            content.addSubview(collectionView)
-            collectionView.snp.makeConstraints { make in
-                make.edges.equalToSuperview()
+            searchBar = UITextField()
+            searchBar.placeholder = "Search"
+            searchBar.borderStyle = .roundedRect
+            searchBar.delegate = self
+            content.addSubview(searchBar)
+            
+            searchBar.snp.makeConstraints { make in
+                make.top.equalTo(content.snp.top).offset(30)
+                make.left.equalTo(content.snp.left).offset(30)
+                make.right.equalTo(content.snp.right).offset(-30)
+                make.height.equalTo(50)
             }
-            self.collectionView.didSelect = { object, indexPath in
-                self.selectedAlbum = albumArray[indexPath.row]
-                let vc = AlbumPhotosVC()
-                vc.selectedAlbum = self.selectedAlbum
-                vc.modalPresentationStyle = .fullScreen
-                self.present(destinationVC: vc, slideDirection: .right)
+            
+            notesTableView = NotesTableView()
+            content.addSubview(notesTableView)
+            notesTableView.layer.cornerRadius = 10
+            notesTableView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+            notesTableView.snp.makeConstraints { make in
+                make.top.equalTo(searchBar.snp.bottom).offset(25)
+                make.left.right.bottom.equalToSuperview()
             }
         }
         
-        createButtonFunctions()
+        configureFunctions()
+        
     }
     
-    private func createButtonFunctions() {
-        backButton.addAction {
-            let vc = HomeVC()
-            vc.modalPresentationStyle = .fullScreen
-            self.dismiss(animated: true)
+    private func configureFunctions() {
+        notesTableView.didSelect = { object, indexPath in
+            print(indexPath.row)
         }
         
+        notesTableView.trailingSwipeActions = [
+            SwipeAction(title: "Delete", color: .red, action: { note, indexPath in
+                noteArray.remove(at: indexPath.row)
+                self.notesTableView.reloadData()
+            })
+        ]
+        
         addButton.addAction {
-            if albumArray.isEmpty {
+            if noteArray.isEmpty {
                 self.customView.isHidden = true
             } else {
-                self.collectionView.isHidden = true
+                self.searchBar.isHidden = true
+                self.notesTableView.isHidden = true
             }
             self.textField.snp.makeConstraints { make in
                 make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).offset(150)
                 make.left.equalTo(self.view.snp.left).offset(20)
                 make.right.equalTo(self.view.snp.right).offset(-20)
-                make.height.equalTo(51)
+                make.height.equalTo(350)
             }
             
             self.saveButton.snp.makeConstraints { make in
@@ -178,8 +202,8 @@ class AlbumsVC: UIViewController {
             }
             
             self.saveButton.addAction {
-                CoreDataManager.saveData(container: "Vault", entity: "Album", attributeDict: [
-                    "name": self.textField.text!,
+                CoreDataManager.saveData(container: "Vault", entity: "Note", attributeDict: [
+                    "title": self.textField.text!,
                 ])
             }
         }

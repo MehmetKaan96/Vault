@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 import NeonSDK
 
-class NoAlbumView: UIView {
+class NoView: UIView {
     private let label1: UILabel = {
         let label = UILabel()
         label.text = "There is no albums"
@@ -36,8 +36,11 @@ class NoAlbumView: UIView {
         return iv
     }()
     
-    init() {
+    init(text: String, description: String, image: String) {
         super.init(frame: .zero)
+        self.imageView.image = UIImage(named: image)
+        self.label1.text = text
+        self.label2.text = description
         createUI()
     }
     

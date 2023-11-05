@@ -13,6 +13,7 @@ class AlbumPhotosVC: UIViewController {
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     var selectedAlbum: AlbumModel!
     var collectionView: PhotoCollectionView!
+    var selectedImages: [UIImage] = []
     
     let deleteButton: UIButton = {
         let button = UIButton()
@@ -103,14 +104,19 @@ class AlbumPhotosVC: UIViewController {
             self.dismiss(animated: true)
         }
         
-    }
+        deleteButton.addAction {
+            self.collectionView.allowsSelection = true
+            self.collectionView.allowsMultipleSelection = true
+            
+            }
+        }
     
     func selectImage() {
         var configuration = PHPickerConfiguration()
-                configuration.filter = .images
+        configuration.filter = .images
         configuration.selectionLimit = 10
-                let picker = PHPickerViewController(configuration: configuration)
-                picker.delegate = self
-                present(picker, animated: true, completion: nil)
+        let picker = PHPickerViewController(configuration: configuration)
+        picker.delegate = self
+        present(picker, animated: true, completion: nil)
     }
 }
