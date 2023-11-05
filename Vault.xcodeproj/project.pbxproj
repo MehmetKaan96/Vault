@@ -48,6 +48,7 @@
 		D32B40922AF6C98900C008CC /* PasswordModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32B40912AF6C98900C008CC /* PasswordModel.swift */; };
 		D32B40942AF6DFB900C008CC /* PasswordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32B40932AF6DFB900C008CC /* PasswordCell.swift */; };
 		D32B40962AF6E21600C008CC /* PasswordTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32B40952AF6E21600C008CC /* PasswordTableView.swift */; };
+		D32B40982AF78F4200C008CC /* CustomPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32B40972AF78F4200C008CC /* CustomPage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -93,6 +94,7 @@
 		D32B40912AF6C98900C008CC /* PasswordModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordModel.swift; sourceTree = "<group>"; };
 		D32B40932AF6DFB900C008CC /* PasswordCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordCell.swift; sourceTree = "<group>"; };
 		D32B40952AF6E21600C008CC /* PasswordTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordTableView.swift; sourceTree = "<group>"; };
+		D32B40972AF78F4200C008CC /* CustomPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -207,6 +209,7 @@
 				D32B40172AF44FA400C008CC /* PhotoCollectionView.swift */,
 				D32B40842AF6B15500C008CC /* NotesTableView.swift */,
 				D32B40952AF6E21600C008CC /* PasswordTableView.swift */,
+				D32B40972AF78F4200C008CC /* CustomPage.swift */,
 			);
 			path = CustomViews;
 			sourceTree = "<group>";
@@ -403,6 +406,7 @@
 				D32B3FE42AF3E97400C008CC /* OnboardingVCExtension.swift in Sources */,
 				D32B40342AF57BBB00C008CC /* NotesVC.swift in Sources */,
 				D32B3FC62AF3E81F00C008CC /* Vault.xcdatamodeld in Sources */,
+				D32B40982AF78F4200C008CC /* CustomPage.swift in Sources */,
 				D32B3FF42AF3EAA300C008CC /* HomeDeclarations.swift in Sources */,
 				D32B3FF82AF3EAFE00C008CC /* SettingsVC.swift in Sources */,
 			);

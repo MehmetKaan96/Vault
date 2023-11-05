@@ -114,4 +114,3 @@ class CustomOnboardingView: UIView {
     }
     
 }
-

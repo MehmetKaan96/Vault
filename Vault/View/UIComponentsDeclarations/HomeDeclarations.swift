@@ -29,7 +29,7 @@ struct HomeDeclarations {
     
     static let homeView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor(red: 0.971, green: 0.971, blue: 0.971, alpha: 1)
+        view.backgroundColor = .homecontainercolor
         view.layer.cornerRadius = 15
         view.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
         return view
@@ -48,6 +48,24 @@ struct HomeDeclarations {
         iv.contentMode = .scaleAspectFill
         iv.image = UIImage(named: "img_safeVault")
         return iv
+    }()
+    
+    static let albumLabel: UILabel = {
+       let label = UILabel()
+        label.text = "Albums"
+        label.textAlignment = .center
+        label.font = Font.custom(size: 16, fontWeight: .Regular)
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    static let notesLabel: UILabel = {
+       let label = UILabel()
+        label.text = "Notes"
+        label.textAlignment = .center
+        label.font = Font.custom(size: 16, fontWeight: .Regular)
+        label.numberOfLines = 0
+        return label
     }()
 }
 

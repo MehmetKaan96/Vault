@@ -17,6 +17,8 @@ class HomeVC: UIViewController {
     let homeView = HomeDeclarations.homeView
     let infoView = HomeDeclarations.infoView
     let imageView = HomeDeclarations.imageView
+    let albumLabel = HomeDeclarations.albumLabel
+    let notesLabel = HomeDeclarations.notesLabel
     let notesButton = UIButton()
     let albumButton = UIButton()
     let browserButton = CustomButton(text: "Private Browser", image1: UIImage(named: "img_privateBrowser"), image2: UIImage(named: "btn_arrow_right"))
@@ -30,12 +32,14 @@ class HomeVC: UIViewController {
     }
     
     func createUI() {
-        view.backgroundColor = UIColor(red: 0.321, green: 0.492, blue: 0.929, alpha: 1)
+        view.backgroundColor = UIColor.headercolor
         
         view.addSubview(headerTitle)
         view.addSubview(settingsButton)
         view.addSubview(homeView)
         homeView.addSubview(infoView)
+        homeView.addSubview(notesLabel)
+        homeView.addSubview(albumLabel)
         infoView.addSubview(imageView)
         makeConstraints()
     }
@@ -53,7 +57,7 @@ class HomeVC: UIViewController {
         }
         
         homeView.snp.makeConstraints { make in
-            make.top.lessThanOrEqualTo(view.snp.top).offset(120)
+            make.top.lessThanOrEqualTo(headerTitle.snp.bottom).offset(30)
             make.left.equalTo(view.snp.left)
             make.right.equalTo(view.snp.right)
             make.bottom.equalTo(view.snp.bottom)
@@ -122,6 +126,16 @@ class HomeVC: UIViewController {
             make.centerX.equalTo(homeView.snp.centerX)
         }
         
+        albumLabel.snp.makeConstraints { make in
+            make.top.equalTo(albumButton.snp.bottom).offset(15)
+            make.left.equalTo(homeView.snp.left).offset(105)
+        }
+        
+        notesLabel.snp.makeConstraints { make in
+            make.top.equalTo(notesButton.snp.bottom).offset(15)
+            make.left.equalTo(albumLabel.snp.right).offset(80)
+        }
+        
         let buttonVStack = NeonVStack(width: 340) { vstack in
             browserButton.backgroundColor = .white
             vstack.addArrangedSubview(browserButton)
@@ -171,3 +185,6 @@ class HomeVC: UIViewController {
     }
 }
 
+#Preview() {
+    HomeVC()
+}
