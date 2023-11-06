@@ -43,11 +43,11 @@ class AlbumCell: NeonCollectionViewCell<AlbumModel> {
     
     override func configure(with album: AlbumModel) {
         super.configure(with: album)
-        if let data = album.images.last?.imageData {
+        if let data = album.images?.last?.imageData {
             imageView.image = UIImage(data: data)
         }
         self.albumLabel.text = album.name
-        self.photoCountLabel.text = "\(album.images.count - 1) photo(s)"
+        self.photoCountLabel.text = "\((album.images!.count)) photo(s)"
     }
     
     required init?(coder: NSCoder) {
@@ -61,16 +61,16 @@ class AlbumCell: NeonCollectionViewCell<AlbumModel> {
         
         imageView.layer.cornerRadius = 10
         imageView.snp.makeConstraints { make in
-            make.height.equalTo(120)
+            make.height.equalTo(100)
             make.left.equalTo(contentView.snp.left)
-            make.top.equalTo(contentView.snp.top)
+            make.top.equalTo(contentView.snp.top).offset(10)
             make.right.equalTo(contentView.snp.right)
         }
         
         albumLabel.snp.makeConstraints { make in
             make.top.equalTo(imageView.snp.bottom).offset(15)
-            make.left.equalTo(imageView.snp.left).offset(25)
-            make.right.equalTo(imageView.snp.right).offset(-25)
+            make.left.equalTo(imageView.snp.left).offset(20)
+            make.right.equalTo(imageView.snp.right).offset(-20)
         }
         
         photoCountLabel.snp.makeConstraints { make in

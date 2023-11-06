@@ -10,26 +10,18 @@ import NeonSDK
 import CoreData
 
 extension CoreDataManager {
-    public static func fetchAlbumsAndPhotos(container: String, completion: @escaping ([Album]?) -> Void) {
-        let context = persistentContainer(container: container).viewContext
-        
-        let fetchRequest = NSFetchRequest<Album>(entityName: "Album")
-        
-        do {
-            let albums = try context.fetch(fetchRequest)
-            completion(albums)
-        } catch {
-            print("Error fetching albums: \(error)")
-            completion(nil)
-        }
-    }
-    
-    public static func fetchPhotosInAlbum(container: String, album: Album, completion: @escaping ([Photo]?) -> Void) {
-        if let photos = album.images?.array as? [Photo] {
-            completion(photos)
-        } else {
-            print("Error fetching photos for the album")
-            completion(nil)
-        }
+    public static func fetchImages(with id: UUID, dataFetched: @escaping(_ data : NSManagedObject) -> ()) {
+        let context = persistentContainer(container: "Vault").viewContext
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Photo")
+            fetchRequest.returnsObjectsAsFaults = false
+            fetchRequest.predicate = NSPredicate(format: "selected_album_id == %@", id as CVarArg)
+            do {
+                let datas = try context.fetch(fetchRequest)
+                for data in datas as! [NSManagedObject] {
+                    dataFetched(data)
+                }
+            } catch {
+                print("Error!")
+            }
     }
 }

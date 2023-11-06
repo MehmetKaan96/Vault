@@ -23,22 +23,34 @@ extension AlbumPhotosVC: PHPickerViewControllerDelegate {
                 print("Error loading image: \(error)")
             } else if let url = url {
                 if let imageData = try? Data(contentsOf: url) {
-                    AlbumPhotosVC.saveImageToCoreData(imageData, albumName: self.selectedAlbum.name)
+                    self.saveImageToCoreData(imageData, albumID: self.selectedAlbumID)
                 }
             }
         }
-        AlbumsVC.fetchFromCoreData()
+//        AlbumsVC.fetchFromCoreData()
     }
     
-    static func saveImageToCoreData(_ imageData: Data, albumName: String) {
-        if let albumIndex = albumArray.firstIndex(where: { $0.name == albumName }) {
-            let album = albumArray[albumIndex]
-            CoreDataManager.saveData(container: "Vault", entity: "Photo", attributeDict: [
-                "imageData": imageData
-            ])
-            let photo = PhotoModel(imageData: imageData)
-            albumArray[albumIndex].images.append(photo)
+    func fetchImages() {
+        photoArray.removeAll(keepingCapacity: false)
+        photoArray.append(PhotoModel(id: UUID(), imageData: (UIImage(named: "addingbtn")?.pngData())!, selected_album_id: UUID()))
+        CoreDataManager.fetchImages(with: selectedAlbumID) { data in
+            if let id = data.value(forKey: "id") as? UUID, let imageData = data.value(forKey: "imageData") as? Data, let album_id = data.value(forKey: "selected_album_id") as? UUID {
+                photoArray.append(PhotoModel(id: id, imageData: imageData, selected_album_id: album_id))
+            }
         }
     }
     
+    func saveImageToCoreData(_ imageData: Data, albumID: UUID) {
+        let id = UUID()
+        if let albumIndex = albumArray.firstIndex(where: { $0.id == albumID }) {
+            CoreDataManager.saveData(container: "Vault", entity: "Photo", attributeDict: [
+                "imageData": imageData,
+                "selected_album_id": albumID,
+                "id": id
+            ])
+            let photo = PhotoModel(id: id, imageData: imageData, selected_album_id: albumID)
+            albumArray[albumIndex].images?.append(photo)
+            collectionView.reloadData()
+        }
+    }
 }

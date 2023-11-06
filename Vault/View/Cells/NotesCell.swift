@@ -54,13 +54,14 @@ class NotesCell: NeonTableViewCell<NoteModel> {
             
             titleLabel.snp.makeConstraints { make in
                 make.top.equalTo(noteImage.snp.top).offset(10)
-                make.left.equalTo(noteImage.snp.right).offset(30)
+                make.left.equalTo(noteImage.snp.right).offset(10)
                 make.right.equalTo(contentView.snp.right)
+                make.height.equalTo(60)
             }
             
             descriptionLabel.snp.makeConstraints { make in
                 make.top.equalTo(titleLabel.snp.bottom).offset(10)
-                make.left.equalTo(noteImage.snp.right).offset(30)
+                make.left.equalTo(noteImage.snp.right).offset(10)
                 make.right.equalTo(contentView.snp.right)
                 make.bottom.lessThanOrEqualTo(contentView.snp.bottom).inset(10)
             }

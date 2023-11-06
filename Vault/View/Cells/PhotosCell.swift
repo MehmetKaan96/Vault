@@ -9,13 +9,6 @@ import NeonSDK
 
 class PhotosCell: NeonCollectionViewCell<PhotoModel> {
     static let identifier =  "photosCell"
-    
-    var isCellUserInteractionEnabled: Bool = true {
-            didSet {
-                imageView.isUserInteractionEnabled = isCellUserInteractionEnabled
-            }
-        }
-    
     internal let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
@@ -43,7 +36,7 @@ class PhotosCell: NeonCollectionViewCell<PhotoModel> {
         
         imageView.layer.cornerRadius = 10
         imageView.snp.makeConstraints { make in
-            make.height.equalTo(120)
+            make.height.equalTo(100)
             make.left.equalTo(contentView.snp.left)
             make.top.equalTo(contentView.snp.top).offset(20)
             make.right.equalTo(contentView.snp.right)

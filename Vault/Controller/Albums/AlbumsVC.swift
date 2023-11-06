@@ -81,7 +81,7 @@ class AlbumsVC: UIViewController {
     }
     
     private func createUI() {
-        AlbumsVC.fetchFromCoreData()
+        fetchFromCoreData()
         view.backgroundColor = .headercolor
         view.addSubview(content)
         view.addSubview(backButton)
@@ -133,12 +133,11 @@ class AlbumsVC: UIViewController {
             self.collectionView.didSelect = { object, indexPath in
                 self.selectedAlbum = albumArray[indexPath.row]
                 let vc = AlbumPhotosVC()
-                vc.selectedAlbum = self.selectedAlbum
+                vc.selectedAlbumID = self.selectedAlbum.id
                 vc.modalPresentationStyle = .fullScreen
                 self.present(destinationVC: vc, slideDirection: .right)
             }
         }
-        
         createButtonFunctions()
     }
     
@@ -148,7 +147,6 @@ class AlbumsVC: UIViewController {
             vc.modalPresentationStyle = .fullScreen
             self.dismiss(animated: true)
         }
-        
         addButton.addAction {
             if albumArray.isEmpty {
                 self.customView.isHidden = true
@@ -180,7 +178,13 @@ class AlbumsVC: UIViewController {
             self.saveButton.addAction {
                 CoreDataManager.saveData(container: "Vault", entity: "Album", attributeDict: [
                     "name": self.textField.text!,
+                    "id": UUID()
                 ])
+                self.dismiss(animated: true)
+            }
+            
+            self.cancelButton.addAction {
+                self.dismiss(animated: true)
             }
         }
     }

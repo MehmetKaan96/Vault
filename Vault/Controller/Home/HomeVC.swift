@@ -184,7 +184,3 @@ class HomeVC: UIViewController {
         }
     }
 }
-
-#Preview() {
-    HomeVC()
-}

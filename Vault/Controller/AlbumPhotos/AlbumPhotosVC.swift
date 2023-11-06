@@ -11,9 +11,8 @@ import PhotosUI
 
 class AlbumPhotosVC: UIViewController {
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-    var selectedAlbum: AlbumModel!
+    var selectedAlbumID: UUID!
     var collectionView: PhotoCollectionView!
-    var selectedImages: [UIImage] = []
     
     let deleteButton: UIButton = {
         let button = UIButton()
@@ -53,12 +52,12 @@ class AlbumPhotosVC: UIViewController {
     }
     
     private func createUI() {
+        fetchImages()
         view.backgroundColor = .headercolor
         view.addSubview(content)
         view.addSubview(backButton)
         view.addSubview(titleLabel)
         view.addSubview(deleteButton)
-        
         
         content.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(79)
@@ -96,6 +95,14 @@ class AlbumPhotosVC: UIViewController {
             }
         }
         
+        collectionView.contextMenuActions = [
+            ContextMenuAction(title: "Delete", imageSystemName: "trash", isDestructive: true, action: { object, indexPath in
+                let id = photoArray[indexPath.row].id
+                photoArray.remove(at: indexPath.row)
+                CoreDataManager.deleteData(container: "Vault", entity: "Photo", searchKey: "id", searchValue: "\(id)")
+                self.collectionView.reloadData()
+            })]
+        
         createFunctions()
     }
     
@@ -109,6 +116,8 @@ class AlbumPhotosVC: UIViewController {
             self.collectionView.allowsMultipleSelection = true
             
             }
+        
+        
         }
     
     func selectImage() {

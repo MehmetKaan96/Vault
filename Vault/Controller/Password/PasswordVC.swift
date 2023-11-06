@@ -270,9 +270,17 @@ class PasswordVC: UIViewController {
                     "password": self.passwordTextField.text!,
                     "website": self.websiteTextField.text!
                 ])
-                self.passwordTableView.reloadData()
+                self.dismiss(animated: true)
             }
             
+            self.cancelButton.addAction {
+                self.dismiss(animated: true)
+            }
+            
+        }
+        
+        self.backButton.addAction {
+            self.dismiss(animated: true)
         }
     }
 

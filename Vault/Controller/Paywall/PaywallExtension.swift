@@ -14,4 +14,6 @@ extension PaywallVC {
         vc.modalPresentationStyle = .fullScreen
         self.present(destinationVC: vc, slideDirection: .up)
     }
+    
+    
 }

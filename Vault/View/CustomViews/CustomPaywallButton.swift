@@ -10,9 +10,9 @@ import NeonSDK
 
 class CustomPaywallButton: UIButton {
     
-    private let buttonText1 = UILabel()
-    private let buttonText2 = UILabel()
-    private let buttonImageView = UIImageView()
+    private var buttonText1 = UILabel()
+    private var buttonText2 = UILabel()
+    internal let buttonImageView = UIImageView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -65,6 +65,10 @@ class CustomPaywallButton: UIButton {
             make.centerY.equalTo(self.snp.centerY)
             make.right.equalTo(self.snp.right).offset(-15)
         }
+    }
+    
+    func setButtonText2(text: String) {
+        self.buttonText2.text = text
     }
     
 }

@@ -18,6 +18,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         Font.configureFonts(font: .Inter)
         Neon.configure(window: &window, onboardingVC: OnboardingVC(), paywallVC: PaywallVC(), homeVC: HomeVC())
+        RevenueCatManager.configure(withAPIKey: "appl_jUarexrNVYZjItxnAgepitpWDKY", products: [
+        "com.neonapps.education.SwiftyStoreKitDemo.Weekly",
+        "com.neonapps.education.SwiftyStoreKitDemo.Montly",
+        "com.neonapps.education.SwiftyStoreKitDemo.Annual",
+        ])
         return true
     }
     // MARK: - Core Data stack

@@ -8,8 +8,9 @@
 import Foundation
 
 struct AlbumModel {
+    var id: UUID
     let name: String
-    var images: [PhotoModel]
+    var images: [PhotoModel]? = nil
 }
 
 var albumArray: [AlbumModel] = []

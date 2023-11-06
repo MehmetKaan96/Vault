@@ -41,7 +41,7 @@ class PasswordCell: NeonTableViewCell<PasswordModel> {
             passwordImage.snp.makeConstraints { make in
                 make.left.equalTo(contentView.snp.left).offset(20)
                 make.centerY.equalTo(contentView.snp.centerY)
-//                make.bottom.lessThanOrEqualTo(contentView.snp.bottom).inset(10)
+                make.bottom.lessThanOrEqualTo(contentView.snp.bottom)
             }
             
             passwordLabel.snp.makeConstraints { make in
@@ -54,7 +54,7 @@ class PasswordCell: NeonTableViewCell<PasswordModel> {
     
     override func configure(with object: PasswordModel) {
         super.configure(with: object)
-        self.passwordLabel.text = object.name
+        self.passwordLabel.text = object.account
         self.passwordImage.image = UIImage(data: object.image)
     }
 

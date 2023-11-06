@@ -154,6 +154,19 @@ class NotesVC: UIViewController {
                 make.top.equalTo(searchBar.snp.bottom).offset(25)
                 make.left.right.bottom.equalToSuperview()
             }
+            
+            notesTableView.didSelect = { object, indexPath in
+                print(indexPath.row)
+            }
+            
+            notesTableView.trailingSwipeActions = [
+                SwipeAction(title: "Delete", color: .red, action: { note, indexPath in
+                    CoreDataManager.deleteData(container: "Vault", entity: "Note", searchKey: "title", searchValue: "\(noteArray[indexPath.row].title)")
+                    noteArray.remove(at: indexPath.row)
+                    self.notesTableView.reloadData()
+                })
+            ]
+            
         }
         
         configureFunctions()
@@ -161,16 +174,9 @@ class NotesVC: UIViewController {
     }
     
     private func configureFunctions() {
-        notesTableView.didSelect = { object, indexPath in
-            print(indexPath.row)
+        backButton.addAction {
+            self.dismiss(animated: true)
         }
-        
-        notesTableView.trailingSwipeActions = [
-            SwipeAction(title: "Delete", color: .red, action: { note, indexPath in
-                noteArray.remove(at: indexPath.row)
-                self.notesTableView.reloadData()
-            })
-        ]
         
         addButton.addAction {
             if noteArray.isEmpty {
@@ -205,6 +211,11 @@ class NotesVC: UIViewController {
                 CoreDataManager.saveData(container: "Vault", entity: "Note", attributeDict: [
                     "title": self.textField.text!,
                 ])
+                self.dismiss(animated: true)
+            }
+            
+            self.cancelButton.addAction {
+                self.dismiss(animated: true)
             }
         }
     }

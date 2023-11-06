@@ -11,7 +11,24 @@
 import UIKit
 import NeonSDK
 
-class PaywallVC: UIViewController {
+class PaywallVC: UIViewController, RevenueCatManagerDelegate {
+    func packageFetched() {
+        if let monthlyPackage = RevenueCatManager.getPackage(id: "com.neonapps.education.SwiftyStoreKitDemo.Montly"){
+            let price = monthlyPackage.localizedPriceString
+            monthlyButton.setButtonText2(text: "\(price)")
+        }
+        
+        if let weeklyPackage = RevenueCatManager.getPackage(id: "com.neonapps.education.SwiftyStoreKitDemo.Weekly"){
+            let price = weeklyPackage.localizedPriceString
+            print("Weekly price: \(price)")
+        }
+        
+        if let annualPackage = RevenueCatManager.getPackage(id: "com.neonapps.education.SwiftyStoreKitDemo.Annual"){
+            let price = annualPackage.localizedPriceString
+            print("Annual price: \(price)")
+        }
+    }
+    
     
     let imageView = PaywallDeclarations.imageView
     let buttonView = PaywallDeclarations.buttonView
@@ -28,6 +45,8 @@ class PaywallVC: UIViewController {
         
         // Do any additional setup after loading the view.
         createUI()
+        RevenueCatManager.delegate = self
+        packageFetched()
     }
     
     private func createUI() {
@@ -89,6 +108,10 @@ class PaywallVC: UIViewController {
         }
         
         buttonView.addSubview(monthlyButton)
+        monthlyButton.isSelected = true
+        monthlyButton.layer.borderWidth = 1
+        monthlyButton.layer.borderColor = UIColor.systemBlue.cgColor
+        monthlyButton.buttonImageView.isHidden = false
         monthlyButton.snp.makeConstraints { make in
             make.top.lessThanOrEqualTo(weeklyButton.snp.bottom).offset(30)
             make.left.equalTo(buttonView.snp.left).offset(30)
@@ -105,10 +128,20 @@ class PaywallVC: UIViewController {
         }
         
         startButton.snp.makeConstraints { make in
-//            make.top.equalTo(annualButton.snp.bottom)
+            //            make.top.equalTo(annualButton.snp.bottom)
             make.left.right.equalToSuperview().inset(120)
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
             make.height.equalTo(buttonView.snp.width).multipliedBy(0.1)
+        }
+        
+        startButton.addAction {
+            RevenueCatManager.selectPackage(id: "com.neonapps.education.SwiftyStoreKitDemo.Montly")
+            
+            RevenueCatManager.purchase(animation: .loadingBar) {
+                self.present(destinationVC: HomeVC(), slideDirection: .left)
+            } completionFailure: {
+                // Couldn't purchase selected package
+            }
         }
     }
 }

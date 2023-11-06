@@ -13,15 +13,4 @@ struct NoteModel {
 }
 
 var noteArray: [NoteModel] = [
-
-    NoteModel(title: "Test Test Test Test Test Test", description: "Deneme Deneme Deneme Deneme Deneme Deneme Deneme Deneme Deneme"),
-    NoteModel(title: "Test Test Test Test Test Test", description: "Deneme Deneme Deneme Deneme Deneme Deneme Deneme Deneme Deneme"),
-    NoteModel(title: "Test Test Test Test Test Test", description: "Deneme Deneme Deneme Deneme Deneme Deneme Deneme Deneme Deneme"),
-    NoteModel(title: "Test Test Test Test Test Test", description: "Deneme Deneme Deneme Deneme Deneme Deneme Deneme Deneme Deneme"),
-    NoteModel(title: "Test Test Test Test Test Test", description: "Deneme Deneme Deneme Deneme Deneme Deneme Deneme Deneme Deneme"),
-    NoteModel(title: "Test Test Test Test Test Test", description: "Deneme Deneme Deneme Deneme Deneme Deneme Deneme Deneme Deneme"),
-    NoteModel(title: "Test Test Test Test Test Test", description: "Deneme Deneme Deneme Deneme Deneme Deneme Deneme Deneme Deneme"),
-    NoteModel(title: "Test Test Test Test Test Test", description: "Deneme Deneme Deneme Deneme Deneme Deneme Deneme Deneme Deneme"),
-    NoteModel(title: "Test Test Test Test Test Test", description: "Deneme Deneme Deneme Deneme Deneme Deneme Deneme Deneme Deneme"),
-    NoteModel(title: "Test Test Test Test Test Test", description: "Deneme Deneme Deneme Deneme Deneme Deneme Deneme Deneme Deneme"),
 ]

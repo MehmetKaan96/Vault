@@ -49,6 +49,8 @@
 		D32B40942AF6DFB900C008CC /* PasswordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32B40932AF6DFB900C008CC /* PasswordCell.swift */; };
 		D32B40962AF6E21600C008CC /* PasswordTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32B40952AF6E21600C008CC /* PasswordTableView.swift */; };
 		D32B40982AF78F4200C008CC /* CustomPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32B40972AF78F4200C008CC /* CustomPage.swift */; };
+		D3F6A0442AF91128006D4D6B /* Configuration.storekit in Resources */ = {isa = PBXBuildFile; fileRef = D3F6A0432AF91128006D4D6B /* Configuration.storekit */; };
+		D3F6A0462AF91221006D4D6B /* StoreKitTestCertificate.cer in Resources */ = {isa = PBXBuildFile; fileRef = D3F6A0452AF91221006D4D6B /* StoreKitTestCertificate.cer */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -95,6 +97,8 @@
 		D32B40932AF6DFB900C008CC /* PasswordCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordCell.swift; sourceTree = "<group>"; };
 		D32B40952AF6E21600C008CC /* PasswordTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordTableView.swift; sourceTree = "<group>"; };
 		D32B40972AF78F4200C008CC /* CustomPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPage.swift; sourceTree = "<group>"; };
+		D3F6A0432AF91128006D4D6B /* Configuration.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = Configuration.storekit; sourceTree = "<group>"; };
+		D3F6A0452AF91221006D4D6B /* StoreKitTestCertificate.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = StoreKitTestCertificate.cer; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +116,8 @@
 		D32B3FAF2AF3E81E00C008CC = {
 			isa = PBXGroup;
 			children = (
+				D3F6A0432AF91128006D4D6B /* Configuration.storekit */,
+				D3F6A0452AF91221006D4D6B /* StoreKitTestCertificate.cer */,
 				D32B3FBA2AF3E81F00C008CC /* Vault */,
 				D32B3FB92AF3E81F00C008CC /* Products */,
 			);
@@ -358,7 +364,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D3F6A0462AF91221006D4D6B /* StoreKitTestCertificate.cer in Resources */,
 				D32B3FCB2AF3E82000C008CC /* LaunchScreen.storyboard in Resources */,
+				D3F6A0442AF91128006D4D6B /* Configuration.storekit in Resources */,
 				D32B3FC82AF3E81F00C008CC /* Assets.xcassets in Resources */,
 				D32B3FC32AF3E81F00C008CC /* Main.storyboard in Resources */,
 			);

@@ -18,4 +18,8 @@ extension NotesVC: UITextFieldDelegate {
             }
         }
     }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        
+    }
 }

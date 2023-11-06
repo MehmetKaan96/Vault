@@ -10,23 +10,19 @@ import UIKit
 import NeonSDK
 
 extension AlbumsVC {
-    static func fetchFromCoreData() {
+    func fetchFromCoreData() {
         albumArray.removeAll(keepingCapacity: false)
         photoArray.removeAll(keepingCapacity: false)
-        CoreDataManager.fetchDatas(container: "Vault", entity: "Album") { albumData in
-            if let albumName = albumData.value(forKey: "name") as? String {
+        photoArray.append(PhotoModel(id: UUID(), imageData: (UIImage(named: "addingbtn")?.pngData())!, selected_album_id: UUID()))
+        CoreDataManager.fetchDatas(container: "Vault", entity: "Album") { data in
+            if let name = data.value(forKey: "name") as? String, let id = data.value(forKey: "id") as? UUID{
                 var photos: [PhotoModel] = []
-                
-                photos.append(PhotoModel(imageData: (UIImage(named: "addingbtn")?.pngData())!))
-                
-                CoreDataManager.fetchDatas(container: "Vault", entity: "Photo") { photoData in
-                    if let imageData = photoData.value(forKey: "imageData") as? Data {
-                        let photo = PhotoModel(imageData: imageData)
-                        photos.append(photo)
+                CoreDataManager.fetchImages(with: id) { data in
+                    if let images = data.value(forKey: "imageData") as? Data, let id = data.value(forKey: "id") as? UUID, let album_id = data.value(forKey: "selected_album_id") as? UUID {
+                        photos.append(PhotoModel(id: id, imageData: images, selected_album_id: album_id))
                     }
                 }
-                photoArray.append(contentsOf: photos)
-                albumArray.append(AlbumModel(name: albumName, images: photos))
+                albumArray.append(AlbumModel(id: id, name: name, images: photos))
             }
         }
     }
