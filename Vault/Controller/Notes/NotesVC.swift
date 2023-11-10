@@ -9,116 +9,59 @@ import UIKit
 import NeonSDK
 
 class NotesVC: UIViewController {
-    
-    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-    var notesTableView: NotesTableView!
-    var searchBar: UITextField!
-    
-    internal let textField: UITextField = {
-        let tf = UITextField()
-        tf.placeholder = "Text Here"
-        tf.font = Font.custom(size: 16, fontWeight: .Regular)
-        tf.borderStyle = .roundedRect
-        return tf
-    }()
-    
-    internal let descriptiontextField: UITextField = {
-        let tf = UITextField()
-        tf.placeholder = "Text Here"
-        tf.font = Font.custom(size: 16, fontWeight: .Regular)
-        tf.borderStyle = .roundedRect
-        return tf
-    }()
-    
-    private let saveButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("Save", for: .normal)
-        button.backgroundColor = .systemBlue
-        button.layer.cornerRadius = 10
-        button.setTitleColor(.white, for: .normal)
-        return button
-    }()
-    
-    private let cancelButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("Cancel", for: .normal)
-        button.backgroundColor = .white
-        button.layer.cornerRadius = 10
-        button.setTitleColor(.black, for: .normal)
-        return button
-    }()
-    
-    let addButton: UIButton = {
-        let button = UIButton()
-        button.setImage(UIImage(named: "btn_add"), for: .normal)
-        button.configuration = .plain()
-        return button
-    }()
-    
-    let backButton: UIButton = {
-        let button = UIButton()
-        button.setImage(UIImage(named: "btn_back"), for: .normal)
-        button.configuration = .plain()
-        return button
-    }()
-    
-    private let titleLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Notes"
-        label.numberOfLines = 0
-        label.textAlignment = .center
-        label.textColor = .white
-        label.font = Font.custom(size: 25, fontWeight: .Medium)
-        return label
-    }()
-    
-    var customView: NoView!
-    
-    private let content: UIView = {
-        let view = UIView()
-        view.backgroundColor = .white
-        view.layer.cornerRadius = 15
-        view.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
-        return view
-    }()
+    var notesTableView =  NotesTableView()
+    var searchBar = UISearchBar()
+    let saveButton = UIButton()
+    let cancelButton = UIButton()
+    let addButton = UIButton()
+    let backButton = UIButton()
+    let textView =  NeonTextView()
+    let descriptionTextView = NeonTextView()
+    let titleLabel = UILabel()
+    let customView = NoView(text: "There is No Notes", description: "You don't have any notes yet.", image: "img_notes")
+    let content = UIView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         createUI()
     }
-    
-    private func createUI() {
+  
+    func createUI() {
         fetchFromCoreData()
         view.backgroundColor = .headercolor
-        view.addSubview(content)
-        view.addSubview(backButton)
-        view.addSubview(titleLabel)
-        view.addSubview(addButton)
-        
-        content.addSubview(saveButton)
-        content.addSubview(cancelButton)
-        content.addSubview(textField)
-        content.addSubview(descriptiontextField)
-        
-        textField.textAlignment = .left
-        textField.contentVerticalAlignment = .top
     
+        content.backgroundColor = .white
+        content.layer.cornerRadius = 15
+        content.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
+        view.addSubview(content)
         content.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(79)
             make.left.right.bottom.equalToSuperview()
         }
         
+        backButton.setImage(UIImage(named: "btn_back"), for: .normal)
+        backButton.configuration = .plain()
+        view.addSubview(backButton)
         backButton.snp.makeConstraints { make in
             make.left.equalTo(view.safeAreaLayoutGuide.snp.left)
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(10)
         }
         
+        titleLabel.text = "Notes"
+        titleLabel.numberOfLines = 0
+        titleLabel.textAlignment = .center
+        titleLabel.textColor = .white
+        titleLabel.font = Font.custom(size: 25, fontWeight: .Medium)
+        view.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
             make.left.equalTo(backButton.snp.right).offset(110)
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(10)
             make.centerY.equalTo(backButton.snp.centerY)
         }
         
+        addButton.setImage(UIImage(named: "btn_add"), for: .normal)
+        addButton.configuration = .plain()
+        view.addSubview(addButton)
         addButton.snp.makeConstraints { make in
             make.right.equalTo(view.safeAreaLayoutGuide.snp.right)
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(10)
@@ -126,16 +69,20 @@ class NotesVC: UIViewController {
         }
         
         if noteArray.isEmpty {
-            customView = NoView(text: "There is No Notes", description: "You don't have any notes yet.", image: "img_notes")
             content.addSubview(customView)
             customView.snp.makeConstraints { make in
                 make.centerX.equalTo(content.snp.centerX)
                 make.top.equalTo(content.snp.top).offset(100)
             }
         } else {
-            searchBar = UITextField()
             searchBar.placeholder = "Search"
-            searchBar.borderStyle = .roundedRect
+            searchBar.setImage(UIImage(), for: .search, state: .normal)
+            searchBar.searchBarStyle = .minimal
+            
+            if let textfield = self.searchBar.value(forKey: "searchField") as? UITextField {
+                
+                textfield.backgroundColor = .white
+            }
             searchBar.delegate = self
             content.addSubview(searchBar)
             
@@ -145,13 +92,11 @@ class NotesVC: UIViewController {
                 make.right.equalTo(content.snp.right).offset(-30)
                 make.height.equalTo(50)
             }
-            
-            notesTableView = NotesTableView()
             content.addSubview(notesTableView)
             notesTableView.layer.cornerRadius = 10
             notesTableView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
             notesTableView.snp.makeConstraints { make in
-                make.top.equalTo(searchBar.snp.bottom).offset(25)
+                make.top.equalTo(searchBar.snp.bottom)
                 make.left.right.bottom.equalToSuperview()
             }
             
@@ -160,10 +105,22 @@ class NotesVC: UIViewController {
             }
             
             notesTableView.trailingSwipeActions = [
-                SwipeAction(title: "Delete", color: .red, action: { note, indexPath in
+                SwipeAction(title: "Delete", color: .red, action: { [self] note, indexPath in
                     CoreDataManager.deleteData(container: "Vault", entity: "Note", searchKey: "title", searchValue: "\(noteArray[indexPath.row].title)")
                     noteArray.remove(at: indexPath.row)
-                    self.notesTableView.reloadData()
+                    self.notesTableView.objects = noteArray
+                    
+                    if noteArray.isEmpty {
+                        self.notesTableView.isHidden = true
+                        self.searchBar.isHidden = true
+                        self.content.addSubview(self.customView)
+                        customView.snp.remakeConstraints { make in
+                            make.centerX.equalTo(content.snp.centerX)
+                            make.top.equalTo(content.snp.top).offset(100)
+
+                        }
+                    }
+                    
                 })
             ]
             
@@ -172,35 +129,65 @@ class NotesVC: UIViewController {
         configureFunctions()
         
     }
-    
-    private func configureFunctions() {
+        
+    func configureFunctions() {
         backButton.addAction {
             self.dismiss(animated: true)
         }
         
-        addButton.addAction {
+        addButton.addAction { [self] in
             if noteArray.isEmpty {
                 self.customView.isHidden = true
             } else {
                 self.searchBar.isHidden = true
                 self.notesTableView.isHidden = true
             }
-            self.textField.snp.makeConstraints { make in
+            
+            textView.placeholder = "Enter your text"
+            textView.placeholderColor = .gray
+            textView.textAlignment = .left
+            textView.layer.cornerRadius = 10
+            textView.layer.borderWidth = 0.5
+            content.addSubview(textView)
+            self.textView.snp.makeConstraints { make in
                 make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).offset(150)
+                make.left.equalTo(self.view.snp.left).offset(20)
+                make.right.equalTo(self.view.snp.right).offset(-20)
+                make.height.equalTo(75)
+            }
+            
+            descriptionTextView.placeholder = "Enter your text"
+            descriptionTextView.placeholderColor = .gray
+            descriptionTextView.textAlignment = .left
+            descriptionTextView.layer.cornerRadius = 10
+            descriptionTextView.layer.borderWidth = 0.5
+            content.addSubview(descriptionTextView)
+            self.descriptionTextView.snp.makeConstraints { make in
+                make.top.equalTo(self.textView.snp.bottom).offset(20)
                 make.left.equalTo(self.view.snp.left).offset(20)
                 make.right.equalTo(self.view.snp.right).offset(-20)
                 make.height.equalTo(350)
             }
             
+            saveButton.setTitle("Save", for: .normal)
+            saveButton.backgroundColor = .systemBlue
+            saveButton.layer.cornerRadius = 10
+            saveButton.setTitleColor(.white, for: .normal)
+            content.addSubview(saveButton)
             self.saveButton.snp.makeConstraints { make in
-                make.top.equalTo(self.textField.snp.bottom).offset(20)
+                make.top.equalTo(self.descriptionTextView.snp.bottom).offset(20)
                 make.right.equalTo(self.view.snp.right).offset(-20)
                 make.height.equalTo(51)
                 make.width.equalTo(160)
             }
             
+            cancelButton.setTitle("Cancel", for: .normal)
+            cancelButton.backgroundColor = .white
+            cancelButton.layer.cornerRadius = 10
+            cancelButton.setTitleColor(.black, for: .normal)
+            content.addSubview(cancelButton)
             self.cancelButton.snp.makeConstraints { make in
-                make.top.equalTo(self.textField.snp.bottom).offset(20)
+                make.top.equalTo(self.descriptionTextView.snp.bottom).offset(20)
                 make.left.equalTo(self.view.snp.left).offset(20)
                 make.height.equalTo(51)
                 make.width.equalTo(174)
@@ -209,7 +196,8 @@ class NotesVC: UIViewController {
             
             self.saveButton.addAction {
                 CoreDataManager.saveData(container: "Vault", entity: "Note", attributeDict: [
-                    "title": self.textField.text!,
+                    "title": self.textView.text!,
+                    "desc" : self.descriptionTextView.text!
                 ])
                 self.dismiss(animated: true)
             }

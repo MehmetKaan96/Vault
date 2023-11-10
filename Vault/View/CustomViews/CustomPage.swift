@@ -122,6 +122,3 @@ class CustomPage: UIView {
     
 }
 
-#Preview() {
-    CustomPage(pageName: "Home", rightButtonImage: UIImage(named: "btn_settings"))
-}

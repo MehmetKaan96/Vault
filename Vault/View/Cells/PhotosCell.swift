@@ -9,13 +9,7 @@ import NeonSDK
 
 class PhotosCell: NeonCollectionViewCell<PhotoModel> {
     static let identifier =  "photosCell"
-    internal let imageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFill
-        imageView.clipsToBounds = true
-        imageView.layer.borderWidth = 1
-        return imageView
-    }()
+    let imageView = UIImageView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -32,14 +26,15 @@ class PhotosCell: NeonCollectionViewCell<PhotoModel> {
     }
     
     private func setupSubViews() {
-        contentView.addSubview(imageView)
         
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        imageView.layer.borderWidth = 1
         imageView.layer.cornerRadius = 10
+        addSubview(imageView)
         imageView.snp.makeConstraints { make in
-            make.height.equalTo(100)
-            make.left.equalTo(contentView.snp.left)
-            make.top.equalTo(contentView.snp.top).offset(20)
-            make.right.equalTo(contentView.snp.right)
+            make.top.equalTo(contentView.snp.top).offset(5)
+            make.right.left.bottom.equalToSuperview()
         }
 
     }

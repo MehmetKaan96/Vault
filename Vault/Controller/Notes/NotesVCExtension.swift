@@ -12,14 +12,26 @@ import NeonSDK
 extension NotesVC: UITextFieldDelegate {
     func fetchFromCoreData() {
         noteArray.removeAll(keepingCapacity: false)
-        CoreDataManager.fetchDatas(container: "Vault", entity: "Note") { data in
-            if let text = data.value(forKey: "title") as? String {
-                noteArray.append(NoteModel(title: text, description: text))
+        CoreDataManager.fetchDatas(container: "Vault", entity: "Note") { [self] data in
+            if let text = data.value(forKey: "title") as? String, let desc = data.value(forKey: "desc") as? String {
+                noteArray.append(NoteModel(title: text, description: desc))
             }
+            notesTableView.objects = noteArray
         }
     }
-    
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        
+}
+
+extension NotesVC: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        print(searchText)
+        filteredNoteArray = noteArray.filter({ note in
+            return note.title.lowercased().contains(searchText.lowercased())
+        })
+        notesTableView.objects = filteredNoteArray
+        if searchText.isEmpty {
+            filteredNoteArray.removeAll()
+            notesTableView.objects = noteArray
+        }
+        notesTableView.reloadData()
     }
 }

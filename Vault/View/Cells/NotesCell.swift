@@ -12,6 +12,7 @@ class NotesCell: NeonTableViewCell<NoteModel> {
     
     private let titleLabel: UILabel = {
        let label = UILabel()
+        label.text = "dkfjsgjkhsdfkgjsdkfjgskdjfgşksdjfhgksjdfhgksjdfngjklsdbfgkjsn"
         label.font = Font.custom(size: 20, fontWeight: .Medium)
         label.numberOfLines = 0
         return label
@@ -19,6 +20,7 @@ class NotesCell: NeonTableViewCell<NoteModel> {
     
     private let descriptionLabel: UILabel = {
        let label = UILabel()
+        label.text = "jkdnfsgkjsnfdglksdnflgnsdlfkgmnsdşlfkgmnsdlfnglsshjfsahjdfgshjfgsjdfgjsdhjfgsdjfgsdjfgsdjfgskdjfhgskj"
         label.font = Font.custom(size: 10, fontWeight: .Light)
         label.numberOfLines = 0
         return label
@@ -27,7 +29,7 @@ class NotesCell: NeonTableViewCell<NoteModel> {
     private let noteImage: UIImageView = {
         let imageView = UIImageView()
         imageView.clipsToBounds = true
-        imageView.contentMode = .scaleAspectFill
+        imageView.contentMode = .scaleAspectFit
         imageView.image = UIImage(named: "img_notes")
         return imageView
     }()
@@ -42,14 +44,17 @@ class NotesCell: NeonTableViewCell<NoteModel> {
     }
     
     private func setupSubviews() {
-            contentView.addSubview(noteImage)
-            contentView.addSubview(titleLabel)
-            contentView.addSubview(descriptionLabel)
+            addSubview(noteImage)
+            addSubview(titleLabel)
+            addSubview(descriptionLabel)
             
             noteImage.snp.makeConstraints { make in
-                make.left.equalTo(contentView.snp.left)
-                make.top.equalTo(contentView.snp.top).inset(10)
-                make.bottom.lessThanOrEqualTo(contentView.snp.bottom).inset(10)
+                make.left.equalTo(contentView.snp.left).offset(30)
+                make.top.equalTo(contentView.snp.top).offset(10)
+                make.bottom.equalTo(contentView.snp.bottom)
+                make.right.equalToSuperview().inset(300)
+//                make.height.equalTo(50)
+//                make.width.equalTo(50)
             }
             
             titleLabel.snp.makeConstraints { make in
@@ -72,4 +77,8 @@ class NotesCell: NeonTableViewCell<NoteModel> {
         self.descriptionLabel.text = object.description
         self.titleLabel.text = object.title
     }
+}
+
+#Preview() {
+    NotesCell()
 }

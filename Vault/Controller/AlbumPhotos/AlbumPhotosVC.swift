@@ -8,73 +8,61 @@
 import UIKit
 import NeonSDK
 import PhotosUI
+import CoreData
 
 class AlbumPhotosVC: UIViewController {
-    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     var selectedAlbumID: UUID!
     var collectionView: PhotoCollectionView!
-    
-    let deleteButton: UIButton = {
-        let button = UIButton()
-        button.setImage(UIImage(named: "btn_delete"), for: .normal)
-        button.configuration = .plain()
-        return button
-    }()
-    
-    let backButton: UIButton = {
-        let button = UIButton()
-        button.setImage(UIImage(named: "btn_back"), for: .normal)
-        button.configuration = .plain()
-        return button
-    }()
-    
-    private let titleLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Photos"
-        label.numberOfLines = 0
-        label.textAlignment = .center
-        label.textColor = .white
-        label.font = Font.custom(size: 25, fontWeight: .Medium)
-        return label
-    }()
-    
-    private let content: UIView = {
-        let view = UIView()
-        view.backgroundColor = .white
-        view.layer.cornerRadius = 15
-        view.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
-        return view
-    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         createUI()
     }
+    override func viewWillAppear(_ animated: Bool) {
+        collectionView.objects = photoArray
+    }
     
     private func createUI() {
         fetchImages()
         view.backgroundColor = .headercolor
-        view.addSubview(content)
-        view.addSubview(backButton)
-        view.addSubview(titleLabel)
-        view.addSubview(deleteButton)
+
         
-        content.snp.makeConstraints { make in
+        let contentView = UIView()
+        contentView.backgroundColor = .white
+        contentView.layer.cornerRadius = 15
+        contentView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
+        view.addSubview(contentView)
+        contentView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(79)
             make.left.right.bottom.equalToSuperview()
         }
         
+        let backButton = UIButton()
+        backButton.setImage(UIImage(named: "btn_back"), for: .normal)
+        backButton.configuration = .plain()
+        view.addSubview(backButton)
         backButton.snp.makeConstraints { make in
             make.left.equalTo(view.safeAreaLayoutGuide.snp.left)
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(10)
         }
         
+        let titleLabel = UILabel()
+        titleLabel.text = "Photos"
+        titleLabel.numberOfLines = 0
+        titleLabel.textAlignment = .center
+        titleLabel.textColor = .white
+        titleLabel.font = Font.custom(size: 25, fontWeight: .Medium)
+        view.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
             make.left.equalTo(backButton.snp.right).offset(110)
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(10)
             make.centerY.equalTo(backButton.snp.centerY)
         }
         
+        var deleteButton = UIButton()
+        deleteButton.setImage(UIImage(named: "btn_delete"), for: .normal)
+        deleteButton.configuration = .plain()
+        view.addSubview(deleteButton)
         deleteButton.snp.makeConstraints { make in
             make.right.equalTo(view.safeAreaLayoutGuide.snp.right)
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(10)
@@ -84,9 +72,10 @@ class AlbumPhotosVC: UIViewController {
         collectionView = PhotoCollectionView()
         collectionView.layer.cornerRadius = 10
         collectionView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-        content.addSubview(collectionView)
+        contentView.addSubview(collectionView)
         collectionView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.top.equalToSuperview().offset(15)
+            make.left.right.bottom.equalToSuperview()
         }
         
         collectionView.didSelect = { object, indexPath in
@@ -98,15 +87,14 @@ class AlbumPhotosVC: UIViewController {
         collectionView.contextMenuActions = [
             ContextMenuAction(title: "Delete", imageSystemName: "trash", isDestructive: true, action: { object, indexPath in
                 let id = photoArray[indexPath.row].id
-                photoArray.remove(at: indexPath.row)
                 CoreDataManager.deleteData(container: "Vault", entity: "Photo", searchKey: "id", searchValue: "\(id)")
-                self.collectionView.reloadData()
+                photoArray.remove(at: indexPath.row)
+                self.collectionView.objects = photoArray
+                if photoArray.count == 1 {
+                    self.dismiss(animated: true)
+                }
             })]
         
-        createFunctions()
-    }
-    
-    func createFunctions() {
         backButton.addAction {
             self.dismiss(animated: true)
         }
@@ -116,10 +104,8 @@ class AlbumPhotosVC: UIViewController {
             self.collectionView.allowsMultipleSelection = true
             
             }
+    }
         
-        
-        }
-    
     func selectImage() {
         var configuration = PHPickerConfiguration()
         configuration.filter = .images
@@ -127,5 +113,50 @@ class AlbumPhotosVC: UIViewController {
         let picker = PHPickerViewController(configuration: configuration)
         picker.delegate = self
         present(picker, animated: true, completion: nil)
+    }
+}
+
+extension AlbumPhotosVC: PHPickerViewControllerDelegate {
+    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+        picker.dismiss(animated: true, completion: nil)
+
+        for result in results {
+                result.itemProvider.loadFileRepresentation(forTypeIdentifier: UTType.image.identifier) { url, error in
+                    if let error = error {
+                        print("Error loading image: \(error)")
+                    } else if let url = url {
+                        if let imageData = try? Data(contentsOf: url) {
+                            self.saveImageToCoreData(imageData, albumID: self.selectedAlbumID)
+                        }
+                    }
+                }
+            }
+    }
+    
+    func fetchImages() {
+        photoArray.removeAll(keepingCapacity: false)
+        photoArray.append(PhotoModel(id: UUID(), imageData: (UIImage(named: "addingbtn")?.pngData())!, selected_album_id: UUID()))
+        CoreDataManager.fetchImages(with: selectedAlbumID) { data in
+            if let id = data.value(forKey: "id") as? UUID, let imageData = data.value(forKey: "imageData") as? Data, let album_id = data.value(forKey: "selected_album_id") as? UUID {
+                photoArray.append(PhotoModel(id: id, imageData: imageData, selected_album_id: album_id))
+            }
+        }
+    }
+    
+    func saveImageToCoreData(_ imageData: Data, albumID: UUID) {
+        let id = UUID()
+        if let albumIndex = albumArray.firstIndex(where: { $0.id == albumID }) {
+            CoreDataManager.saveData(container: "Vault", entity: "Photo", attributeDict: [
+                "imageData": imageData,
+                "selected_album_id": albumID,
+                "id": id
+            ])
+            let photo = PhotoModel(id: id, imageData: imageData, selected_album_id: albumID)
+            albumArray[albumIndex].images?.append(photo)
+            DispatchQueue.main.async {
+                self.fetchImages()
+                self.collectionView.objects = photoArray
+            }
+        }
     }
 }

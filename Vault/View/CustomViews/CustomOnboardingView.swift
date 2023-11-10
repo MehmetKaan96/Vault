@@ -10,26 +10,26 @@ import NeonSDK
 
 
 protocol CustomOnboardingViewDelegate {
-    func buttonDidTapped()
+    func onboardingButtonDidTapped()
 }
 
 class CustomOnboardingView: UIView {
     
     var delegate: CustomOnboardingViewDelegate?
     
-    let imageView = OnboardDeclarations.imageView
-    let label1 = OnboardDeclarations.label1
-    let label2 = OnboardDeclarations.label2
-    let contentView = OnboardDeclarations.contentView
-    let button = OnboardDeclarations.button
+    let imageView = UIImageView()
+    let onboardLabel1 = UILabel()
+    let onboardingLabel2 = UILabel()
+    let contentView = UIView()
+    let onboardingButton = UIButton()
     let pageControl = NeonPageControlV2()
     
     init(text: String = "Lock Private Items", subtext: String = "Safely store your private photos, videos, passwords, credit card information and notes in this app.", image: UIImage = UIImage(named: "img_onboarding1")!, title: String = "Next") {
         super.init(frame: .zero)
-        self.label1.text = text
-        self.label2.text = subtext
+        self.onboardLabel1.text = text
+        self.onboardingLabel2.text = subtext
         self.imageView.image = image
-        self.button.setTitle(title, for: .normal)
+        self.onboardingButton.setTitle(title, for: .normal)
     }
     
     override init(frame: CGRect) {
@@ -42,10 +42,10 @@ class CustomOnboardingView: UIView {
     }
     
     func setup(with text: String = "Lock Private Items", image:UIImage = UIImage(named: "img_onboarding1")!, subtext: String = "Safely store your private photos, videos, passwords, credit card information and notes in this app.", title: String = "Next") {
-        label1.text = text
-        label2.text = subtext
+        onboardLabel1.text = text
+        onboardingLabel2.text = subtext
         imageView.image = image
-        button.setTitle(title, for: .normal)
+        onboardingButton.setTitle(title, for: .normal)
     }
     
     private func createUI() {
@@ -55,26 +55,22 @@ class CustomOnboardingView: UIView {
         
         self.frame = CGRect(x: 0, y: 0, width: width, height: height)
         
-        self.addSubview(imageView)
-        self.addSubview(contentView)
-        contentView.addSubview(label1)
-        contentView.addSubview(label2)
-        contentView.addSubview(button)
-        contentView.addSubview(pageControl)
-        
-        pageControl.numberOfPages = 2
-        pageControl.currentPageTintColor = UIColor(red: 0.321, green: 0.492, blue: 0.929, alpha: 1)
-        pageControl.tintColor = UIColor(red: 0.913, green: 0.913, blue: 0.913, alpha: 1)
-        pageControl.padding = 10
-        
         setup()
         
+        self.addSubview(imageView)
+        imageView.clipsToBounds = true
+        imageView.contentMode = .scaleAspectFill
         imageView.snp.makeConstraints { make in
             make.top.equalTo(self.snp.top).offset(20)
             make.leading.trailing.equalToSuperview().inset(15)
             make.height.equalTo(self.snp.height).multipliedBy(0.45)
         }
 
+        contentView.backgroundColor = .homecontainercolor
+        contentView.clipsToBounds = true
+        contentView.layer.cornerRadius = 10
+        contentView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
+        addSubview(contentView)
         contentView.snp.makeConstraints { make in
             make.top.equalTo(imageView.snp.bottom).offset(20)
             make.leading.trailing.equalToSuperview().inset(5)
@@ -82,35 +78,51 @@ class CustomOnboardingView: UIView {
             make.height.equalTo(self.snp.height).multipliedBy(0.5)
         }
 
-        label1.snp.makeConstraints { make in
+        contentView.addSubview(onboardLabel1)
+        onboardLabel1.numberOfLines = 0
+        onboardLabel1.textAlignment = .center
+        onboardLabel1.textColor = UIColor(red: 0.379, green: 0.379, blue: 0.379, alpha: 1)
+        onboardLabel1.font = Font.custom(size: 28, fontWeight: .SemiBold)
+        contentView.addSubview(onboardLabel1)
+        onboardLabel1.snp.makeConstraints { make in
             make.top.equalTo(contentView.snp.top).offset(20)
             make.leading.trailing.equalToSuperview().inset(60)
             make.height.equalTo(42)
         }
 
-        label2.snp.makeConstraints { make in
-            make.top.equalTo(label1.snp.bottom).offset(20)
+        onboardingLabel2.numberOfLines = 0
+        onboardingLabel2.textAlignment = .center
+        onboardingLabel2.textColor = UIColor(red: 0.379, green: 0.379, blue: 0.379, alpha: 1)
+        onboardingLabel2.font = Font.custom(size: 18, fontWeight: .Regular)
+        contentView.addSubview(onboardingLabel2)
+        onboardingLabel2.snp.makeConstraints { make in
+            make.top.equalTo(onboardLabel1.snp.bottom).offset(20)
             make.leading.trailing.equalToSuperview().inset(15)
             make.height.equalTo(81)
         }
 
+        contentView.addSubview(pageControl)
+        pageControl.numberOfPages = 2
+        pageControl.currentPageTintColor = UIColor(red: 0.321, green: 0.492, blue: 0.929, alpha: 1)
+        pageControl.tintColor = UIColor(red: 0.913, green: 0.913, blue: 0.913, alpha: 1)
+        pageControl.padding = 10
         pageControl.snp.makeConstraints { make in
-            make.top.lessThanOrEqualTo(label2.snp.bottom).offset(57)
+            make.top.lessThanOrEqualTo(onboardingLabel2.snp.bottom).offset(57)
             make.leading.trailing.equalToSuperview().inset(20)
             make.height.equalTo(15)
         }
 
-        button.snp.makeConstraints { make in
+        onboardingButton.configuration = .filled()
+        onboardingButton.setTitle("Next", for: .normal)
+        contentView.addSubview(onboardingButton)
+        onboardingButton.snp.makeConstraints { make in
             make.top.lessThanOrEqualTo(pageControl.snp.bottom).offset(65)
             make.leading.trailing.equalToSuperview().inset(120)
             make.bottom.equalTo(self.snp.bottom).inset(49)
             make.height.equalTo(51)
         }
-        button.addTarget(self, action: #selector(changePage), for: .touchUpInside)
+        onboardingButton.addAction { [self] in
+            delegate?.onboardingButtonDidTapped()
+        }
     }
-    
-    @objc func changePage() {
-        delegate?.buttonDidTapped()
-    }
-    
 }

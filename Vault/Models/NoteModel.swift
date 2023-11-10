@@ -12,5 +12,6 @@ struct NoteModel {
     var description: String?
 }
 
-var noteArray: [NoteModel] = [
-]
+var noteArray: [NoteModel] = []
+
+var filteredNoteArray: [NoteModel] = []

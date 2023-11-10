@@ -12,6 +12,7 @@
     </entity>
     <entity name="Password" representedClassName="Password" syncable="YES" codeGenerationType="class">
         <attribute name="account_name" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="image" optional="YES" attributeType="Binary"/>
         <attribute name="login_account" optional="YES" attributeType="String"/>
         <attribute name="password" optional="YES" attributeType="String"/>

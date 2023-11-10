@@ -12,13 +12,13 @@ import NeonSDK
 
 class HomeVC: UIViewController {
 
-    let headerTitle = HomeDeclarations.headerTitle
-    let settingsButton = HomeDeclarations.settingsButton
-    let homeView = HomeDeclarations.homeView
-    let infoView = HomeDeclarations.infoView
-    let imageView = HomeDeclarations.imageView
-    let albumLabel = HomeDeclarations.albumLabel
-    let notesLabel = HomeDeclarations.notesLabel
+    let headerTitle = UILabel()
+    let settingsButton = UIButton()
+    let homeView = UIView()
+    let infoView = UIView()
+    let imageView = UIImageView()
+    let albumLabel = UILabel()
+    let notesLabel = UILabel()
     let notesButton = UIButton()
     let albumButton = UIButton()
     let browserButton = CustomButton(text: "Private Browser", image1: UIImage(named: "img_privateBrowser"), image2: UIImage(named: "btn_arrow_right"))
@@ -33,29 +33,30 @@ class HomeVC: UIViewController {
     
     func createUI() {
         view.backgroundColor = UIColor.headercolor
-        
+        headerTitle.font = Font.custom(size: 25, fontWeight: .Medium)
+        headerTitle.text = "Home"
+        headerTitle.textColor = .white
+        headerTitle.textAlignment = .center
         view.addSubview(headerTitle)
-        view.addSubview(settingsButton)
-        view.addSubview(homeView)
-        homeView.addSubview(infoView)
-        homeView.addSubview(notesLabel)
-        homeView.addSubview(albumLabel)
-        infoView.addSubview(imageView)
-        makeConstraints()
-    }
-    
-    private func makeConstraints() {
         headerTitle.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(23)
             make.centerX.equalTo(view.snp.centerX)
         }
 
+        settingsButton.setImage(UIImage(named: "btn_settings"), for: .normal)
+        settingsButton.tintColor = .white
+        settingsButton.configuration = .plain()
+        view.addSubview(settingsButton)
         settingsButton.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(23)
             make.left.equalTo(headerTitle.snp.right).offset(118)
             make.right.equalTo(view.snp.right).offset(-27)
         }
         
+        homeView.backgroundColor = .homecontainercolor
+        homeView.layer.cornerRadius = 15
+        homeView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
+        view.addSubview(homeView)
         homeView.snp.makeConstraints { make in
             make.top.lessThanOrEqualTo(headerTitle.snp.bottom).offset(30)
             make.left.equalTo(view.snp.left)
@@ -63,12 +64,19 @@ class HomeVC: UIViewController {
             make.bottom.equalTo(view.snp.bottom)
         }
         
+        infoView.backgroundColor = .white
+        infoView.layer.cornerRadius = 10
+        homeView.addSubview(infoView)
         infoView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(30)
             make.right.left.equalToSuperview().inset(27)
             make.height.equalTo(homeView.snp.height).multipliedBy(0.2)
         }
         
+        imageView.clipsToBounds = true
+        imageView.contentMode = .scaleAspectFill
+        imageView.image = UIImage(named: "img_safeVault")
+        infoView.addSubview(imageView)
         imageView.snp.makeConstraints { make in
             make.centerY.equalTo(infoView.snp.centerY)
             make.right.equalTo(infoView.snp.right)
@@ -126,11 +134,21 @@ class HomeVC: UIViewController {
             make.centerX.equalTo(homeView.snp.centerX)
         }
         
+        albumLabel.text = "Albums"
+        albumLabel.textAlignment = .center
+        albumLabel.font = Font.custom(size: 16, fontWeight: .Regular)
+        albumLabel.numberOfLines = 0
+        homeView.addSubview(albumLabel)
         albumLabel.snp.makeConstraints { make in
             make.top.equalTo(albumButton.snp.bottom).offset(15)
             make.left.equalTo(homeView.snp.left).offset(105)
         }
         
+        notesLabel.text = "Notes"
+        notesLabel.textAlignment = .center
+        notesLabel.font = Font.custom(size: 16, fontWeight: .Regular)
+        notesLabel.numberOfLines = 0
+        homeView.addSubview(notesLabel)
         notesLabel.snp.makeConstraints { make in
             make.top.equalTo(notesButton.snp.bottom).offset(15)
             make.left.equalTo(albumLabel.snp.right).offset(80)
@@ -165,22 +183,21 @@ class HomeVC: UIViewController {
             self.present(vc, animated: true)
         }
         
+        
         albumButton.addAction {
             let vc = AlbumsVC()
-            vc.modalPresentationStyle = .fullScreen
             self.present(destinationVC: vc, slideDirection: .right)
         }
         
         notesButton.addAction {
             let vc = NotesVC()
-            vc.modalPresentationStyle = .fullScreen
             self.present(destinationVC: vc, slideDirection: .right)
         }
         
         passwordButton.addAction {
             let vc = PasswordVC()
-            vc.modalPresentationStyle = .fullScreen
             self.present(destinationVC: vc, slideDirection: .right)
         }
     }
+    
 }

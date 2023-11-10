@@ -3,4 +3,54 @@
    uuid = "87141B43-08E6-4F61-B2F5-35432D8654F7"
    type = "1"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "822BAFCC-DE91-4194-8719-AAC7CF0C292C"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Vault/Controller/Albums/AlbumsVC.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "32"
+            endingLineNumber = "32"
+            landmarkName = "AlbumsVC"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  uuid = "822BAFCC-DE91-4194-8719-AAC7CF0C292C - 7ac644a1ee5cca94"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Vault.AlbumsVC.viewWillAppear(Swift.Bool) -&gt; ()"
+                  moduleName = "Vault"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mehmetkaan/Desktop/Vault/Vault/Controller/Albums/AlbumsVC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "85"
+                  endingLineNumber = "85"
+                  offsetFromSymbolStart = "316">
+               </Location>
+               <Location
+                  uuid = "822BAFCC-DE91-4194-8719-AAC7CF0C292C - 7ac644a1ee5cca94"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Vault.AlbumsVC.viewWillAppear(Swift.Bool) -&gt; ()"
+                  moduleName = "Vault"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mehmetkaan/Desktop/Vault/Vault/Controller/Albums/AlbumsVC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "85"
+                  endingLineNumber = "85"
+                  offsetFromSymbolStart = "168">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

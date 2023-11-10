@@ -16,9 +16,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        Font.configureFonts(font: .Inter)
+        Font.configureFonts(font: .Poppins)
         Neon.configure(window: &window, onboardingVC: OnboardingVC(), paywallVC: PaywallVC(), homeVC: HomeVC())
-        RevenueCatManager.configure(withAPIKey: "appl_jUarexrNVYZjItxnAgepitpWDKY", products: [
+        RevenueCatManager.configure(withAPIKey: "appl_EgwivqblfjcullmPKANdRsXaKNx", products: [
         "com.neonapps.education.SwiftyStoreKitDemo.Weekly",
         "com.neonapps.education.SwiftyStoreKitDemo.Montly",
         "com.neonapps.education.SwiftyStoreKitDemo.Annual",

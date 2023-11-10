@@ -16,13 +16,16 @@ class NotesTableView: NeonTableView<NoteModel, NotesCell> {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return noteArray.count
+        return filteredNoteArray.isEmpty ? noteArray.count : filteredNoteArray.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = NotesCell()
-        
-        cell.configure(with: noteArray[indexPath.row])
+        if filteredNoteArray.isEmpty {
+            cell.configure(with: noteArray[indexPath.row])
+        } else {
+            cell.configure(with: filteredNoteArray[indexPath.row])
+        }
         return cell
     }
     

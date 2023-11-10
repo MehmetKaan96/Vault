@@ -35,9 +35,10 @@ class PasswordCell: NeonTableViewCell<PasswordModel> {
     }
     
     private func setupSubviews() {
+        contentView.backgroundColor = .homecontainercolor
+        
             contentView.addSubview(passwordImage)
             contentView.addSubview(passwordLabel)
-            
             passwordImage.snp.makeConstraints { make in
                 make.left.equalTo(contentView.snp.left).offset(20)
                 make.centerY.equalTo(contentView.snp.centerY)

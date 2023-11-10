@@ -8,6 +8,7 @@
 import Foundation
 
 struct PasswordModel {
+    let id: UUID
     let name: String
     let account: String
     let password: String
@@ -17,3 +18,4 @@ struct PasswordModel {
 
 
 var passwordArray: [PasswordModel] = []
+var filteredPasswordArray: [PasswordModel] = []

@@ -12,35 +12,15 @@ class AlbumCell: NeonCollectionViewCell<AlbumModel> {
     
     static let identifier =  "albumcell"
     
-    internal let imageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFill
-        imageView.clipsToBounds = true
-        imageView.layer.borderWidth = 1
-        return imageView
-    }()
-    
-    internal let albumLabel: UILabel = {
-       let label = UILabel()
-        label.font = Font.custom(size: 16, fontWeight: .Medium)
-        label.textAlignment = .center
-        label.numberOfLines = 0
-        return label
-    }()
-    
-    internal let photoCountLabel: UILabel = {
-       let label = UILabel()
-        label.font = Font.custom(size: 12, fontWeight: .Regular)
-        label.textAlignment = .center
-        label.numberOfLines = 0
-        return label
-    }()
+    let imageView = UIImageView()
+    let albumLabel = UILabel()
+    let photoCountLabel =  UILabel()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupSubViews()
     }
-    
+    // MARK: - Configure Cell
     override func configure(with album: AlbumModel) {
         super.configure(with: album)
         if let data = album.images?.last?.imageData {
@@ -54,11 +34,13 @@ class AlbumCell: NeonCollectionViewCell<AlbumModel> {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - SetupView
     private func setupSubViews() {
-        contentView.addSubview(imageView)
-        contentView.addSubview(albumLabel)
-        contentView.addSubview(photoCountLabel)
         
+        contentView.addSubview(imageView)
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        imageView.layer.borderWidth = 1
         imageView.layer.cornerRadius = 10
         imageView.snp.makeConstraints { make in
             make.height.equalTo(100)
@@ -67,12 +49,20 @@ class AlbumCell: NeonCollectionViewCell<AlbumModel> {
             make.right.equalTo(contentView.snp.right)
         }
         
+        contentView.addSubview(albumLabel)
+        albumLabel.font = Font.custom(size: 16, fontWeight: .Medium)
+        albumLabel.textAlignment = .center
+        albumLabel.numberOfLines = 0
         albumLabel.snp.makeConstraints { make in
             make.top.equalTo(imageView.snp.bottom).offset(15)
             make.left.equalTo(imageView.snp.left).offset(20)
             make.right.equalTo(imageView.snp.right).offset(-20)
         }
         
+        contentView.addSubview(photoCountLabel)
+        photoCountLabel.font = Font.custom(size: 12, fontWeight: .Regular)
+        photoCountLabel.textAlignment = .center
+        photoCountLabel.numberOfLines = 0
         photoCountLabel.snp.makeConstraints { make in
             make.top.equalTo(albumLabel.snp.bottom).offset(3)
             make.left.equalTo(imageView.snp.left).offset(32)

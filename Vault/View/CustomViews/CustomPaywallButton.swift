@@ -10,9 +10,9 @@ import NeonSDK
 
 class CustomPaywallButton: UIButton {
     
-    private var buttonText1 = UILabel()
-    private var buttonText2 = UILabel()
-    internal let buttonImageView = UIImageView()
+     var paywallButtonText1 = UILabel()
+     var paywallButtonText2 = UILabel()
+     let buttonImageView = UIImageView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -33,16 +33,17 @@ class CustomPaywallButton: UIButton {
     
     private func setupButton(with text: String?, subText: String?) {
         self.layer.cornerRadius = 10
-                
-        buttonText1.font = Font.custom(size: 18, fontWeight: .Regular)
-        buttonText1.textAlignment = .center
-        buttonText1.textColor = UIColor.black
-        self.addSubview(buttonText1)
         
-        buttonText2.font = Font.custom(size: 18, fontWeight: .Medium)
-        buttonText2.textAlignment = .center
-        buttonText2.textColor = UIColor.black
-        self.addSubview(buttonText2)
+        addSubview(paywallButtonText1)
+        paywallButtonText1.font = Font.custom(size: 18, fontWeight: .Regular)
+        paywallButtonText1.textAlignment = .center
+        paywallButtonText1.textColor = UIColor.black
+        
+        
+        paywallButtonText2.font = Font.custom(size: 18, fontWeight: .Medium)
+        paywallButtonText2.textAlignment = .center
+        paywallButtonText2.textColor = UIColor.black
+        self.addSubview(paywallButtonText2)
         
         buttonImageView.image = UIImage(named: "img_tick")
         buttonImageView.isHidden = true
@@ -54,21 +55,21 @@ class CustomPaywallButton: UIButton {
             make.centerY.equalTo(self.snp.centerY)
         }
         
-        buttonText1.text = text
-        buttonText1.snp.makeConstraints { make in
+        paywallButtonText1.text = text
+        paywallButtonText1.snp.makeConstraints { make in
             make.centerY.equalTo(self.snp.centerY)
             make.left.equalTo(buttonImageView.snp.right).offset(13)
         }
         
-        buttonText2.text = subText
-        buttonText2.snp.makeConstraints { make in
+        paywallButtonText2.text = subText
+        paywallButtonText2.snp.makeConstraints { make in
             make.centerY.equalTo(self.snp.centerY)
             make.right.equalTo(self.snp.right).offset(-15)
         }
     }
     
-    func setButtonText2(text: String) {
-        self.buttonText2.text = text
+    func setpaywallButtonText2(text: String) {
+        self.paywallButtonText2.text = text
     }
     
 }

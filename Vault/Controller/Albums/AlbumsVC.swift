@@ -13,101 +13,62 @@ class AlbumsVC: UIViewController {
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     var collectionView: AlbumCollectionView!
     var selectedAlbum: AlbumModel!
-    
-    
-    internal let textField: UITextField = {
-        let tf = UITextField()
-        tf.placeholder = "Album Name"
-        tf.font = Font.custom(size: 16, fontWeight: .Regular)
-        tf.borderStyle = .roundedRect
-        return tf
-    }()
-    
-    private let saveButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("Save", for: .normal)
-        button.backgroundColor = .systemBlue
-        button.layer.cornerRadius = 10
-        button.setTitleColor(.white, for: .normal)
-        return button
-    }()
-    
-    private let cancelButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("Cancel", for: .normal)
-        button.backgroundColor = .white
-        button.layer.cornerRadius = 10
-        button.setTitleColor(.black, for: .normal)
-        return button
-    }()
-    
-    let addButton: UIButton = {
-        let button = UIButton()
-        button.setImage(UIImage(named: "btn_add"), for: .normal)
-        button.configuration = .plain()
-        return button
-    }()
-    
-    let backButton: UIButton = {
-        let button = UIButton()
-        button.setImage(UIImage(named: "btn_back"), for: .normal)
-        button.configuration = .plain()
-        return button
-    }()
-    
-    private let titleLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Albums"
-        label.numberOfLines = 0
-        label.textAlignment = .center
-        label.textColor = .white
-        label.font = Font.custom(size: 25, fontWeight: .Medium)
-        return label
-    }()
-    
+    let textField = UITextField()
+    let saveButton = UIButton()
+    let cancelButton = UIButton()
+    let addButton = UIButton()
+    let backButton = UIButton()
+    let titleLabel = UILabel()
     var customView: NoView!
-    
-    private let content: UIView = {
-        let view = UIView()
-        view.backgroundColor = .white
-        view.layer.cornerRadius = 15
-        view.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
-        return view
-    }()
+    let contentView = UIView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         createUI()
     }
     
+    //    override func viewWillAppear(_ animated: Bool) {
+    //        super.viewWillAppear(animated)
+    //        collectionView.objects = albumArray
+    //        collectionView.reloadData()
+    //    }
+    
     private func createUI() {
         fetchFromCoreData()
         view.backgroundColor = .headercolor
-        view.addSubview(content)
-        view.addSubview(backButton)
-        view.addSubview(titleLabel)
-        view.addSubview(addButton)
         
-        content.addSubview(saveButton)
-        content.addSubview(cancelButton)
-        content.addSubview(textField)
-        
-        content.snp.makeConstraints { make in
+        contentView.backgroundColor = .white
+        contentView.layer.cornerRadius = 15
+        contentView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
+        view.addSubview(contentView)
+        contentView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(79)
             make.left.right.bottom.equalToSuperview()
         }
         
+        backButton.setImage(UIImage(named: "btn_back"), for: .normal)
+        backButton.configuration = .plain()
+        view.addSubview(backButton)
         backButton.snp.makeConstraints { make in
             make.left.equalTo(view.safeAreaLayoutGuide.snp.left)
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(10)
         }
         
+        titleLabel.text = "Albums"
+        titleLabel.numberOfLines = 0
+        titleLabel.textAlignment = .center
+        titleLabel.textColor = .white
+        titleLabel.font = Font.custom(size: 25, fontWeight: .Medium)
+        view.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
             make.left.equalTo(backButton.snp.right).offset(110)
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(10)
             make.centerY.equalTo(backButton.snp.centerY)
         }
         
+        addButton.setImage(UIImage(named: "btn_add"), for: .normal)
+        addButton.configuration = .plain()
+        view.addSubview(addButton)
         addButton.snp.makeConstraints { make in
             make.right.equalTo(view.safeAreaLayoutGuide.snp.right)
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(10)
@@ -116,17 +77,17 @@ class AlbumsVC: UIViewController {
         
         if albumArray.isEmpty {
             customView = NoView(text: "There is No Albums", description: "You don't have any albums yet", image: "img_folder")
-            content.addSubview(customView)
+            contentView.addSubview(customView)
             customView.snp.makeConstraints { make in
-                make.centerX.equalTo(content.snp.centerX)
-                make.top.equalTo(content.snp.top).offset(100)
+                make.centerX.equalTo(contentView.snp.centerX)
+                make.top.equalTo(contentView.snp.top).offset(100)
             }
         } else {
             print(albumArray)
             collectionView = AlbumCollectionView()
             collectionView.layer.cornerRadius = 10
             collectionView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-            content.addSubview(collectionView)
+            contentView.addSubview(collectionView)
             collectionView.snp.makeConstraints { make in
                 make.edges.equalToSuperview()
             }
@@ -134,25 +95,25 @@ class AlbumsVC: UIViewController {
                 self.selectedAlbum = albumArray[indexPath.row]
                 let vc = AlbumPhotosVC()
                 vc.selectedAlbumID = self.selectedAlbum.id
-                vc.modalPresentationStyle = .fullScreen
                 self.present(destinationVC: vc, slideDirection: .right)
             }
         }
-        createButtonFunctions()
-    }
-    
-    private func createButtonFunctions() {
         backButton.addAction {
             let vc = HomeVC()
             vc.modalPresentationStyle = .fullScreen
             self.dismiss(animated: true)
         }
-        addButton.addAction {
+        addButton.addAction { [self] in
             if albumArray.isEmpty {
                 self.customView.isHidden = true
             } else {
                 self.collectionView.isHidden = true
             }
+            
+            contentView.addSubview(textField)
+            textField.placeholder = "Album Name"
+            textField.font = Font.custom(size: 16, fontWeight: .Regular)
+            textField.borderStyle = .roundedRect
             self.textField.snp.makeConstraints { make in
                 make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).offset(150)
                 make.left.equalTo(self.view.snp.left).offset(20)
@@ -160,6 +121,11 @@ class AlbumsVC: UIViewController {
                 make.height.equalTo(51)
             }
             
+            saveButton.setTitle("Save", for: .normal)
+            saveButton.backgroundColor = .systemBlue
+            saveButton.layer.cornerRadius = 10
+            saveButton.setTitleColor(.white, for: .normal)
+            contentView.addSubview(saveButton)
             self.saveButton.snp.makeConstraints { make in
                 make.top.equalTo(self.textField.snp.bottom).offset(20)
                 make.right.equalTo(self.view.snp.right).offset(-20)
@@ -167,6 +133,11 @@ class AlbumsVC: UIViewController {
                 make.width.equalTo(160)
             }
             
+            cancelButton.setTitle("Cancel", for: .normal)
+            cancelButton.backgroundColor = .white
+            cancelButton.layer.cornerRadius = 10
+            cancelButton.setTitleColor(.black, for: .normal)
+            contentView.addSubview(cancelButton)
             self.cancelButton.snp.makeConstraints { make in
                 make.top.equalTo(self.textField.snp.bottom).offset(20)
                 make.left.equalTo(self.view.snp.left).offset(20)
@@ -185,6 +156,26 @@ class AlbumsVC: UIViewController {
             
             self.cancelButton.addAction {
                 self.dismiss(animated: true)
+            }
+        }
+    }
+    
+}
+
+extension AlbumsVC {
+    func fetchFromCoreData() {
+        albumArray.removeAll(keepingCapacity: false)
+        photoArray.removeAll(keepingCapacity: false)
+        photoArray.append(PhotoModel(id: UUID(), imageData: (UIImage(named: "addingbtn")?.pngData())!, selected_album_id: UUID()))
+        CoreDataManager.fetchDatas(container: "Vault", entity: "Album") { data in
+            if let name = data.value(forKey: "name") as? String, let id = data.value(forKey: "id") as? UUID{
+                var photos: [PhotoModel] = []
+                CoreDataManager.fetchImages(with: id) { data in
+                    if let images = data.value(forKey: "imageData") as? Data, let id = data.value(forKey: "id") as? UUID, let album_id = data.value(forKey: "selected_album_id") as? UUID {
+                        photos.append(PhotoModel(id: id, imageData: images, selected_album_id: album_id))
+                    }
+                }
+                albumArray.append(AlbumModel(id: id, name: name, images: photos))
             }
         }
     }
